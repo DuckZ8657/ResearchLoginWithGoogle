@@ -1,0 +1,13 @@
+django
+djangorestframework
+unstructured
+faiss-cpu
+gradio
+python-dotenv==1.0.0
+uwsgi
+cryptography
+django-cors-headers
+django_extensions
+djangorestframework_simplejwt
+drf-yasg
+faker
