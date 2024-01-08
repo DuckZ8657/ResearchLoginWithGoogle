@@ -142,6 +142,8 @@ AUTH_USER_MODEL = 'authentication.User'
 
 ...
 # Google OAuth2 settings
+
+BASE_FRONTEND_URL = os.environ.get('DJANGO_BASE_FRONTEND_URL')
 BASE_FRONTEND_URL = os.environ.get('DJANGO_BASE_FRONTEND_URL', default='http://localhost:3000')
 GOOGLE_OAUTH2_CLIENT_ID = os.environ.get('GOOGLE_OAUTH2_CLIENT_ID')
 GOOGLE_OAUTH2_CLIENT_SECRET = os.environ.get('GOOGLE_OAUTH2_CLIENT_SECRET')

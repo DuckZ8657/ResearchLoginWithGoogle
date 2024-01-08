@@ -7,9 +7,9 @@ from django.shortcuts import redirect
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework.response import Response
 from .mixins import PublicApiMixin, ApiErrorsMixin
-from .services import google_get_access_token, google_get_user_info
-from apps.authentication.models import User
-from apps.authentication.serializers import UserSerializer
+from .utils import google_get_access_token, google_get_user_info
+from authentication.models import User
+from authentication.serializers import UserSerializer
 
 
 def generate_tokens_for_user(user):
