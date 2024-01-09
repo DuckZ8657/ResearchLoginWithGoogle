@@ -1,0 +1,16 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Local development settings
+.env
+.env.local
+.env.*.local
+venv/
+*.sqlite3
+uwsgi.ini
+*.pid
+
+# Ignore macOS system files
+.DS_Store

@@ -11,3 +11,4 @@ django_extensions
 djangorestframework_simplejwt
 drf-yasg
 faker
+python-dotenv==1.0.0
