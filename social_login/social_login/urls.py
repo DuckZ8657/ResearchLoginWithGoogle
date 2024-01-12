@@ -16,8 +16,11 @@ Including another URLconf
 """
 from django.urls import path, include
 from django.contrib import admin
-urlpatterns = [
-   path("admin/", admin.site.urls),
-   path("api/", include("authentication.urls")),
+from authentication.views import GoogleLoginApi
 
+
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path('api/auth/google', GoogleLoginApi.as_view(), name="login-with-google"),
+    # path("api/", include("authentication.urls")),
 ]

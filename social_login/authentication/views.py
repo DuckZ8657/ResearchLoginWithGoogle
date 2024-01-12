@@ -10,6 +10,9 @@ from .mixins import PublicApiMixin, ApiErrorsMixin
 from .utils import google_get_access_token, google_get_user_info
 from authentication.models import User
 from authentication.serializers import UserSerializer
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 
 def generate_tokens_for_user(user):
@@ -29,6 +32,8 @@ class GoogleLoginApi(PublicApiMixin, ApiErrorsMixin, APIView):
         error = serializers.CharField(required=False)
 
     def get(self, request, *args, **kwargs):
+        FRONTEND_BASE_URL = os.environ.get('FRONTEND_BASE_URL')
+
         input_serializer = self.InputSerializer(data=request.GET)
         input_serializer.is_valid(raise_exception=True)
 
@@ -37,16 +42,15 @@ class GoogleLoginApi(PublicApiMixin, ApiErrorsMixin, APIView):
         code = validated_data.get('code')
         error = validated_data.get('error')
 
-        login_url = f'{settings.BASE_FRONTEND_URL}/login'
-    
+        login_url = f'{FRONTEND_BASE_URL}/login'
+
         if error or not code:
             params = urlencode({'error': error})
             return redirect(f'{login_url}?{params}')
 
-        redirect_uri = f'{settings.BASE_FRONTEND_URL}/google/'
-        access_token = google_get_access_token(code=code, 
+        redirect_uri = f'{FRONTEND_BASE_URL}/google'
+        access_token = google_get_access_token(code=code,
                                                redirect_uri=redirect_uri)
-
         user_data = google_get_user_info(access_token=access_token)
 
         try:
@@ -64,19 +68,17 @@ class GoogleLoginApi(PublicApiMixin, ApiErrorsMixin, APIView):
             last_name = user_data.get('family_name', '')
 
             user = User.objects.create(
-                username=username,
+                username=user_data['email'],
                 email=user_data['email'],
                 first_name=first_name,
                 last_name=last_name,
                 registration_method='google',
-                phone_no=None,
-                referral=None
             )
-         
             access_token, refresh_token = generate_tokens_for_user(user)
             response_data = {
                 'user': UserSerializer(user).data,
                 'access_token': str(access_token),
                 'refresh_token': str(refresh_token)
             }
+
             return Response(response_data)

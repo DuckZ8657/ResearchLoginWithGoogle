@@ -10,7 +10,6 @@ GOOGLE_ACCESS_TOKEN_OBTAIN_URL = 'https://oauth2.googleapis.com/token'
 GOOGLE_USER_INFO_URL = 'https://www.googleapis.com/oauth2/v3/userinfo'
 
 
-
 def generate_tokens_for_user(user):
     """
     Generate access and refresh tokens for the given user
